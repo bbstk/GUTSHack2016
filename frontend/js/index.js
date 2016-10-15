@@ -1,8 +1,4 @@
-
-    console.log("asd");
-    
-    var gauge1 = loadLiquidFillGauge("fillgauge", 55);
-    console.log("asd2");
+    var gauge1 = loadLiquidFillGauge("fillgauge1", 55);
     var config1 = liquidFillGaugeDefaultSettings();
     config1.circleColor = "#FF7777";
     config1.textColor = "#FF4444";
