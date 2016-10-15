@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"sync"
 
 	"github.com/gorilla/mux"
 )
@@ -19,6 +20,7 @@ type Employee struct {
 }
 
 var employees = make(map[int]Employee)
+var lock = sync.RWMutex{}
 
 func AddEmployeeEndpoint(w http.ResponseWriter, req *http.Request) {
 
@@ -27,14 +29,18 @@ func AddEmployeeEndpoint(w http.ResponseWriter, req *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+	lock.Lock()
 	employees[employee.Id] = employee
+	lock.Unlock()
 }
 
 func GetEmployeesEndpoint(w http.ResponseWriter, req *http.Request) {
 	var employeeList []Employee
+	lock.RLock()
 	for k := range employees {
 		employeeList = append(employeeList, employees[k])
 	}
+	lock.RUnlock()
 	json.NewEncoder(w).Encode(employeeList)
 }
 
