@@ -25,11 +25,9 @@ function liquidFillGaugeDefaultSettings(){
 }
 
 function loadLiquidFillGauge(elementId, value, config) {
-    console.log("call");
     if(config == null) config = liquidFillGaugeDefaultSettings();
-    console.log("call");
+
     var gauge = d3.select("#" + elementId);
-    cosnole.log(gauge);
     var radius = Math.min(parseInt(gauge.style("width")), parseInt(gauge.style("height")))/2;
     var locationX = parseInt(gauge.style("width"))/2 - radius;
     var locationY = parseInt(gauge.style("height"))/2 - radius;
