@@ -39,6 +39,7 @@ var data = [NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),Ne
 
 
 var refreshIntervalId;
+var refreshIntervalTeamId;
 
 function getMemberData(element) {
     console.log(element.id);
@@ -88,6 +89,38 @@ var hardCodedValuesBefore12 = [18, 61, 33, 24, 55, 30, 25, 17, 47];
 var hardCodedValuesAfter12 = [42, 94, 66, 48, 75, 65, 33, 54, 36];
 var hardCodedTeamMembersBefore12 = [15, 21, 17, 19];
 var hardCodedTeamMembersAfter12 = [24, 55, 30, 43];
+
+
+function timelineChange(time)
+{
+	document.getElementById("range").innerHTML=time;
+	
+	if(globalID === "stress"){
+		if(time < 12){
+			for (var i = 1; i <= 8; i++) {
+					gauges[i-1].update(hardCodedValuesBefore12[i-1]);
+				}
+			for (var i = 1; i <= 4; i++) {
+                    memberGauges[i-1].update(hardCodedTeamMembersBefore12[i-1]);
+                }
+		}else{
+			for (var i = 1; i <= 8; i++) {
+					gauges[i-1].update(hardCodedValuesAfter12[i-1]);
+				}
+			for (var i = 1; i <= 4; i++) {
+                    memberGauges[i-1].update(hardCodedTeamMembersAfter12[i-1]);
+                }
+		}
+		
+		if(refreshIntervalId !== "undefined"){
+			clearInterval(refreshIntervalId);	
+		}
+		
+		if(refreshIntervalTeamId !== "undefined"){
+			clearInterval(refreshIntervalTeamId);	
+		}
+	}
+}
 
 
 function updateCircles(id) {
@@ -154,7 +187,7 @@ function changeColor(elementId) {
 
 }
 
-setInterval(function()
+refreshIntervalTeamId = setInterval(function()
 { 
 		
 	$.get(

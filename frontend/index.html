@@ -59,16 +59,10 @@
 	</ul>
 	<p><center>Timeline</center></p>
 	<div style="padding-left: 15px; padding-right: 15px">
-		<input type="range" min="9" max="17" value="0" step="1" onchange="showValue(this.value)" />
+		<input type="range" min="9" max="17" value="0" step="1" onchange="timelineChange(this.value)" />
 		<span id="range" class="text-center">9</span>:00
 	</div>
 
-	<script type="text/javascript">
-	function showValue(newValue)
-	{
-		document.getElementById("range").innerHTML=newValue;
-	}
-	</script>
 	</div><!--/.sidebar-->
 
 
