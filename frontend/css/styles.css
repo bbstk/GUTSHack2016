@@ -12,6 +12,13 @@ body {
 	color: #5f6468;
 }
 
+hr.vertical
+{
+   width: 0px;
+   height: 100%; /* or height in PX */
+} 
+
+
 p {
 	color: #777;
 }
@@ -222,8 +229,8 @@ fieldset[disabled] .btn-warning.active {
 }
 .btn {
     height: 20%;
-    width: 200px;
-    font-size:24px;
+    width: 150px;
+    font-size:20px;
 }
 
 .btn-danger,
