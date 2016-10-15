@@ -163,3 +163,28 @@ setInterval(function()
 		}
 	);
 }, 3000);
+
+
+setInterval(function()
+{ 	
+	$.get(
+		"http://localhost:12345/stress",
+		{},
+		function(data) {
+		    if(data !== "0"){
+				 bootstrap_alert.warning(data);
+			}
+		}
+	);
+}, 10000);
+
+bootstrap_alert = function() {}
+	bootstrap_alert.warning = function(message) {
+            $('#danimani').html('			<div class="alert alert-warning alert-dismissible" role="alert">\
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>\
+				<strong>Warning!</strong> High levels of stress experienced by team '+ message + '!\
+			</div>')
+        }
+    
+
+	

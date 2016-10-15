@@ -46,6 +46,25 @@ func GetEmployeesEndpoint(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(employeeList)
 }
 
+func CheckStressEndpoint(w http.ResponseWriter, req *http.Request){
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	var teamsMetric = make([]int, 8)
+	lock.RLock()
+	for k := range employees {
+		teamsMetric[employees[k].TeamId-1] += employees[k].Stress
+	}
+	lock.RUnlock()
+
+	for index, element := range teamsMetric {
+		if element/4 >=90 {
+			json.NewEncoder(w).Encode(index+1)
+			return
+		}
+	}
+	json.NewEncoder(w).Encode(0)
+}
+
 func GetSpecificTeamEndpoint(w http.ResponseWriter, req *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
@@ -223,6 +242,7 @@ func main() {
 	router.HandleFunc("/metrics/{metric}", GetLevelForDepartamentEndpoint).Methods("GET")
 	router.HandleFunc("/teams/{metric}", GetTeamsEndpoint).Methods("GET")
 	router.HandleFunc("/teams/{id}/{metric}", GetSpecificTeamEndpoint).Methods("GET")
+	router.HandleFunc("/stress", CheckStressEndpoint).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":12345", router))
 }
