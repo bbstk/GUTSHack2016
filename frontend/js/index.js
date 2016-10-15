@@ -37,20 +37,46 @@ function NewValue(){
 
 var data = [NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue()];
 
+
+var refreshIntervalId;
+
 function getMemberData(element) {
     console.log(element.id);
+	if(refreshIntervalId !== "undefined"){
+		clearInterval(refreshIntervalId);	
+	}
+	
     $.get(
         "http://localhost:12345/teams/" + element.id + "/" + globalID,
         {},
         function(data) {
             data = JSON.parse(data);
-               for (var i = 1; i <= 8; i++) {
-                    changeColor('fillgauge' + i);
-                    gauges[i-1].update(data[i-1]);
+               for (var i = 1; i <= 4; i++) {
+				   console.log(element.id*4 - i + 1);
+                    changeColor('membergauge' + (element.id*4 - i + 1));
+                    memberGauges[element.id*4 - i].update(data[i-1]);
                 }
         }
     );
+	
+	refreshIntervalId = setInterval(function()
+	{ 
+			
+		$.get(
+       "http://localhost:12345/teams/" + element.id + "/" + globalID,
+        {},
+        function(data) {
+            data = JSON.parse(data);
+               for (var i = 1; i <= 4; i++) {
+                    changeColor('membergauge' + (element.id*4 - i + 1));
+                    memberGauges[element.id*4 - i].update(data[i-1]);
+                }
+        }
+    );
+	}, 3000);
 }
+
+
 
 function getData(element) {
     updateCircles(element.id);
@@ -114,6 +140,8 @@ function updateCircles(id) {
 
 function changeColor(elementId) {
   var gauge = d3.select("#" + elementId);
+  console.log(gauge);
+  console.log(elementId);
   gauge.selectAll('path').style('fill', config1.circleColor);
   gauge.selectAll('text').style("fill", config1.textColor)
   gauge.selectAll('circle').style("fill", config1.waveColor);
@@ -129,7 +157,7 @@ setInterval(function()
 		function(data) {
 			data = JSON.parse(data);
 		       for (var i = 1; i <= 8; i++) {
-					changeColor('fillgauge' + i);
+
 					gauges[i-1].update(data[i-1]);
 				}
 		}
