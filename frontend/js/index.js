@@ -171,7 +171,7 @@ setInterval(function()
 		"http://localhost:12345/stress",
 		{},
 		function(data) {
-		    if(data !== "0"){
+		    if(+data !== 0){
 				 bootstrap_alert.warning(data);
 			}
 		}

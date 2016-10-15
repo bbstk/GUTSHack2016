@@ -235,10 +235,12 @@ fieldset[disabled] .btn-warning.active {
 
 .btn-info {
 	background-color: #b728db;
+	border-color: #b728db;
 }
 
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active, .open>.dropdown-toggle.btn-info { 
 	background-color: #b728db;
+	border-color: #b728db;
 }
 .btn-danger,
 .btn-danger:hover,
