@@ -1,18 +1,8 @@
-var randomScalingFactor = function(){ return Math.round(Math.random()*1000)};
+var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 	
 	var lineChartData = {
-			labels : ["January","February","March","April","May","June","July"],
+			labels : ["9am", "10am", "11am", "12pm", "1pm", "2pm", "3pm", "4pm", "5pm"],
 			datasets : [
-				{
-					label: "My First dataset",
-					fillColor : "rgba(220,220,220,0.2)",
-					strokeColor : "rgba(220,220,220,1)",
-					pointColor : "rgba(220,220,220,1)",
-					pointStrokeColor : "#fff",
-					pointHighlightFill : "#fff",
-					pointHighlightStroke : "rgba(220,220,220,1)",
-					data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
-				},
 				{
 					label: "My Second dataset",
 					fillColor : "rgba(48, 164, 255, 0.2)",
@@ -108,6 +98,10 @@ window.onload = function(){
 	var chart1 = document.getElementById("line-chart").getContext("2d");
 	window.myLine = new Chart(chart1).Line(lineChartData, {
 		responsive: true
+		scaleOverride : true,
+        scaleSteps : 10,
+        scaleStepWidth : 10,
+        scaleStartValue : 0 
 	});
 
 };

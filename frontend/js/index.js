@@ -81,3 +81,5 @@
 
     var data = [{"id":3,"teamid":1,"interest":12,"engagement":55,"stress":20,"relaxation":54,"focus":23},{"id":2,"teamid":1,"interest":33,"engagement":12,"stress":88,"relaxation":3,"focus":23}]
     console.log(d3.select('#rowContainer').select('#row1').selectAll('svg').data(data).enter().append('p').text('hello'));
+
+
