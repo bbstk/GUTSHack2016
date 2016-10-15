@@ -6,11 +6,13 @@ config1.circleColor = "#30a5ff";
 config1.textColor = "#007FE0";
 config1.waveTextColor = "#30a5ff";
 config1.waveColor = "#85CAFF";
-for (var i = 1; i <= 4; i++) {
-    memberGauges[i-1] = loadLiquidFillGauge("membergauge" + i, 0, config1);
+config1.waveCount = 2;
+config1.waveAnimateTime = 2000;
+for (var i = 1; i <= 8; i++) {
+    memberGauges[i-1] = loadLiquidFillGauge("membergauge" + i, 50, config1);
 } 
 for (var i = 1; i <= 8; i++) {
-    gauges[i-1] = loadLiquidFillGauge("fillgauge" + i, 0, config1);
+    gauges[i-1] = loadLiquidFillGauge("fillgauge" + i, 50, config1);
 }
 
 $.get(
@@ -35,11 +37,24 @@ function NewValue(){
 
 var data = [NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue()];
 
+function getMemberData(element) {
+    console.log(element.id);
+    $.get(
+        "http://localhost:12345/teams/" + element.id + "/" + globalID,
+        {},
+        function(data) {
+            data = JSON.parse(data);
+               for (var i = 1; i <= 8; i++) {
+                    changeColor('fillgauge' + i);
+                    gauges[i-1].update(data[i-1]);
+                }
+        }
+    );
+}
 
-
-function getData(test) {
-    updateCircles(test.id);
-    updateChart(test.id);
+function getData(element) {
+    updateCircles(element.id);
+    updateChart(element.id);
 
 }
 
