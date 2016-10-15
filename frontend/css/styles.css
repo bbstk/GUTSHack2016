@@ -162,6 +162,15 @@ fieldset[disabled] .btn-primary.active {
 	border-color: #30a5ff;
 }
 
+
+.btn-primary,
+.btn-success,
+.btn-info,
+.btn-warning,
+.btn-danger {
+    margin: 0 25px 25px 25px;
+}
+
 .btn-success,
 .btn-success:hover,
 .btn-success:focus,
