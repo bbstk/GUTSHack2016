@@ -97,7 +97,7 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 window.onload = function(){
 	var chart1 = document.getElementById("line-chart").getContext("2d");
 	window.myLine = new Chart(chart1).Line(lineChartData, {
-		responsive: true
+		responsive: true,
 		scaleOverride : true,
         scaleSteps : 10,
         scaleStepWidth : 10,
