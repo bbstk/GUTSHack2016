@@ -4,9 +4,11 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+
 	"sync"
 
 	"github.com/gorilla/mux"
+	"fmt"
 )
 
 type Employee struct {
@@ -44,6 +46,106 @@ func GetEmployeesEndpoint(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(employeeList)
 }
 
+func GetTeamsEndpoint(w http.ResponseWriter, req *http.Request) {
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
+	var teamsMetric=make([]int, 8)
+	params := mux.Vars(req)
+	switch params["metric"] {
+	case "interest":
+		lock.RLock()
+		for k := range employees {
+			teamsMetric[employees[k].TeamId-1] += employees[k].Interest
+		}
+		lock.RUnlock()
+	case "engagement":
+		lock.RLock()
+		for k := range employees {
+			teamsMetric[employees[k].TeamId-1] += employees[k].Engagement
+		}
+		lock.RUnlock()
+	case "stress":
+		lock.RLock()
+		for k := range employees {
+			teamsMetric[employees[k].TeamId-1] += employees[k].Stress
+		}
+		lock.RUnlock()
+	case "relaxation":
+		lock.RLock()
+		for k := range employees {
+			teamsMetric[employees[k].TeamId-1] += employees[k].Relaxation
+		}
+		lock.RUnlock()
+	case "focus":
+		lock.RLock()
+		for k := range employees {
+			teamsMetric[employees[k].TeamId-1] += employees[k].Focus
+		}
+		lock.RUnlock()
+	default: fmt.Println("default");
+	}
+
+	for index,element := range teamsMetric {
+		teamsMetric[index]=element/4
+	}
+	json.NewEncoder(w).Encode(teamsMetric)
+}
+
+func GetLevelForDepartamentEndpoint(w http.ResponseWriter, req *http.Request) {
+	params := mux.Vars(req)
+	switch params["metric"] {
+	case	"interest":
+		fmt.Println("interest")
+		average:=0
+		lock.RLock()
+		for k := range employees {
+			average += employees[k].Interest
+		}
+		average = average/len(employees)
+		lock.RUnlock()
+		json.NewEncoder(w).Encode([]int {10,3,7,17,25,28,38,45,average})
+	case	"engagement":
+		fmt.Println("engagement")
+		average:=0
+		lock.RLock()
+		for k := range employees {
+			average += employees[k].Engagement
+		}
+		average = average/len(employees)
+		lock.RUnlock()
+		json.NewEncoder(w).Encode([]int {10,3,7,17,25,28,38,45,average})
+	case "stress":
+		average:=0
+		lock.RLock()
+		for k := range employees {
+			average += employees[k].Stress
+		}
+		average = average/len(employees)
+		lock.RUnlock()
+		json.NewEncoder(w).Encode([]int {10,3,7,17,25,28,38,45,average})
+	case "relaxation":
+		average:=0
+		lock.RLock()
+		for k := range employees {
+			average += employees[k].Relaxation
+		}
+		average = average/len(employees)
+		lock.RUnlock()
+		json.NewEncoder(w).Encode([]int {10,3,7,17,25,28,38,45,average})
+	case "focus":
+		average:=0
+		lock.RLock()
+		for k := range employees {
+			average += employees[k].Focus
+		}
+		average = average/len(employees)
+		lock.RUnlock()
+		json.NewEncoder(w).Encode([]int {10,3,7,17,25,28,38,45,average})
+	default: fmt.Println("default")
+	}
+}
+
 func main() {
 	router := mux.NewRouter()
 
@@ -51,6 +153,8 @@ func main() {
 
 	router.HandleFunc("/employee", GetEmployeesEndpoint).Methods("GET")
 	router.HandleFunc("/employee/{id}", AddEmployeeEndpoint).Methods("POST")
+	router.HandleFunc("/metrics/{metric}", GetLevelForDepartamentEndpoint).Methods("GET")
+	router.HandleFunc("/teams/{metric}", GetTeamsEndpoint).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":12345", router))
 }

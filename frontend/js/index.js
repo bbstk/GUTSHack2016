@@ -1,5 +1,6 @@
 var gauges = [];
 var memberGauges = [];   
+var globalID = 'focus';
 var config1 = liquidFillGaugeDefaultSettings();  
 for (var i = 1; i <= 4; i++) {
     memberGauges[i-1] = loadLiquidFillGauge("membergauge" + i, 0, config1);
@@ -28,6 +29,7 @@ function getData(test) {
 }
 
 function updateCircles(id) {
+	globalID = id;
     if (id === 'interest') {
         config1.circleColor = "#8ad919";
         config1.textColor = "#5C9211";
@@ -61,11 +63,21 @@ function updateCircles(id) {
     else {
 
     }
-    for (var i = 1; i <= 8; i++) {
-        data = [NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue()];
-        changeColor('fillgauge' + i);
-        gauges[i-1].update(data[i-1]);
-    }
+	
+	
+	$.get(
+		"http://localhost:12345/teams/"+id,
+		{},
+		function(data) {
+			data = JSON.parse(data);
+		       for (var i = 1; i <= 8; i++) {
+					changeColor('fillgauge' + i);
+					gauges[i-1].update(data[i-1]);
+				}
+		}
+	);
+	
+
 
 
 }
@@ -78,3 +90,18 @@ function changeColor(elementId) {
 
 }
 
+setInterval(function()
+{ 
+		
+	$.get(
+		"http://localhost:12345/teams/"+globalID,
+		{},
+		function(data) {
+			data = JSON.parse(data);
+		       for (var i = 1; i <= 8; i++) {
+					changeColor('fillgauge' + i);
+					gauges[i-1].update(data[i-1]);
+				}
+		}
+	);
+}, 3000);
