@@ -220,6 +220,11 @@ fieldset[disabled] .btn-warning.active {
 	background-color: #ffb53e;
 	border-color: #ffb53e;
 }
+.btn {
+    height: 20%;
+    width: 200px;
+    font-size:24px;
+}
 
 .btn-danger,
 .btn-danger:hover,

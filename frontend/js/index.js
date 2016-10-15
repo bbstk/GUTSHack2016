@@ -1,42 +1,80 @@
-    var gauge1 = loadLiquidFillGauge("fillgauge1", 26, config1);
-    var config1 = liquidFillGaugeDefaultSettings();
-    config1.circleColor = "#FF0000";
-    config1.textColor = "#FF0000";
-    config1.waveTextColor = "#FF0000";
-    config1.waveColor = "#FF0000";
-    var gauge2 = loadLiquidFillGauge("fillgauge2", 12, config1);
-    var gauge3 = loadLiquidFillGauge("fillgauge3", 0);
-    var gauge4 = loadLiquidFillGauge("fillgauge4", 0);
-    var gauge5 = loadLiquidFillGauge("fillgauge5", 0);
-    var gauge6 = loadLiquidFillGauge("fillgauge6", 0);
-    var gauge7 = loadLiquidFillGauge("fillgauge7", 0);
-    var gauge8 = loadLiquidFillGauge("fillgauge8", 0);
-    function NewValue(){
-        if(Math.random() > .5){
-            return Math.round(Math.random()*100);
-        } else {
-            return (Math.random()*100).toFixed(1);
-        }
+var gauges = [];
+var memberGauges = [];   
+var config1 = liquidFillGaugeDefaultSettings();  
+for (var i = 1; i <= 4; i++) {
+    memberGauges[i-1] = loadLiquidFillGauge("membergauge" + i, 0, config1);
+} 
+for (var i = 1; i <= 8; i++) {
+    gauges[i-1] = loadLiquidFillGauge("fillgauge" + i, 69, config1);
+}
+console.log(gauges);
+function NewValue(){
+    if(Math.random() > .5){
+        return Math.round(Math.random()*100);
+    } else {
+        return (Math.random()*100).toFixed(1);
+    }
+}
+
+
+var data = [NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue()];
+
+
+
+function getData(test) {
+    updateCircles(test.id);
+    updateChart(test.id);
+
+}
+
+function updateCircles(id) {
+    if (id === 'interest') {
+        config1.circleColor = "#8ad919";
+        config1.textColor = "#5C9211";
+        config1.waveTextColor = "#8ad919";
+        config1.waveColor = "#AFEC5B";
+    }
+    else if (id === 'focus') {
+        config1.circleColor = "#30a5ff";
+        config1.textColor = "#007FE0";
+        config1.waveTextColor = "#30a5ff";
+        config1.waveColor = "#85CAFF";
+    }
+    else if (id === 'relaxation') {
+        config1.circleColor = "#5bc0de";
+        config1.textColor = "#2698BA";
+        config1.waveTextColor = "#5bc0de";
+        config1.waveColor = "#99D7EA";
+    }
+    else if (id === 'stress') {
+        config1.circleColor = "#f9243f";
+        config1.textColor = "#F9102F";
+        config1.waveTextColor = "#f9243f";
+        config1.waveColor = "#FB6075";
+    }
+    else if (id === 'engagement') {
+       config1.circleColor = "#ffb53e";
+        config1.textColor = "#F59700";
+        config1.waveTextColor = "#FFD899";
+        config1.waveColor = "#ffb53e";
+    }
+    else {
+
+    }
+    for (var i = 1; i <= 8; i++) {
+        data = [NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue(),NewValue()];
+        changeColor('fillgauge' + i);
+        gauges[i-1].update(data[i-1]);
     }
 
 
-    var data = [{"id":3,"teamid":1,"interest":12,"engagement":55,"stress":20,"relaxation":54,"focus":23},{"id":2,"teamid":1,"interest":33,"engagement":12,"stress":88,"relaxation":3,"focus":23}]
+}
 
+function changeColor(elementId) {
+  var gauge = d3.select("#" + elementId);
+  gauge.selectAll('path').style('fill', config1.circleColor);
+  gauge.selectAll('text').style("fill", config1.textColor)
+  gauge.selectAll('circle').style("fill", config1.waveColor);
 
-    function neshtosi(test) {
-        // updateCircles(test.id);
-        updateChart(test.id);
-
-    }
-
-    function updateCircles(id) {
-        if (test.id === 'focus') {
-            for (var i = 1; i <= 8; i++) {
-
-
-            }
-        }
-        console.log(test);
-        console.log(test.id);
-    }
+}
 
