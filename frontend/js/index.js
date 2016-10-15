@@ -84,6 +84,12 @@ function getData(element) {
 
 }
 
+var hardCodedValuesBefore12 = [18, 61, 33, 24, 55, 30, 25, 17, 47];
+var hardCodedValuesAfter12 = [42, 94, 66, 48, 75, 65, 33, 54, 36];
+var hardCodedTeamMembersBefore12 = [15, 21, 17, 19];
+var hardCodedTeamMembersAfter12 = [24, 55, 30, 43];
+
+
 function updateCircles(id) {
 	globalID = id;
     if (id === 'interest') {
