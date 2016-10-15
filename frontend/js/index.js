@@ -2,13 +2,28 @@ var gauges = [];
 var memberGauges = [];   
 var globalID = 'focus';
 var config1 = liquidFillGaugeDefaultSettings();  
+config1.circleColor = "#30a5ff";
+config1.textColor = "#007FE0";
+config1.waveTextColor = "#30a5ff";
+config1.waveColor = "#85CAFF";
 for (var i = 1; i <= 4; i++) {
     memberGauges[i-1] = loadLiquidFillGauge("membergauge" + i, 0, config1);
 } 
 for (var i = 1; i <= 8; i++) {
-    gauges[i-1] = loadLiquidFillGauge("fillgauge" + i, 69, config1);
+    gauges[i-1] = loadLiquidFillGauge("fillgauge" + i, 0, config1);
 }
-console.log(gauges);
+
+$.get(
+    "http://localhost:12345/teams/focus",
+    {},
+    function(data) {
+        data = JSON.parse(data);
+           for (var i = 1; i <= 8; i++) {
+                changeColor('fillgauge' + i);
+                gauges[i-1].update(data[i-1]);
+            }
+    }
+);
 function NewValue(){
     if(Math.random() > .5){
         return Math.round(Math.random()*100);
