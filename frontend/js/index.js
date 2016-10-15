@@ -24,7 +24,7 @@
 
 
     function neshtosi(test) {
-        updateCircles(test.id);
+        // updateCircles(test.id);
         updateChart(test.id);
 
     }
