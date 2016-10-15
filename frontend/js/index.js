@@ -99,10 +99,10 @@ function updateCircles(id) {
         config1.waveColor = "#85CAFF";
     }
     else if (id === 'relaxation') {
-        config1.circleColor = "#5bc0de";
-        config1.textColor = "#2698BA";
-        config1.waveTextColor = "#5bc0de";
-        config1.waveColor = "#99D7EA";
+        config1.circleColor = "#b728db";
+        config1.textColor = "#831B9D";
+        config1.waveTextColor = "#b728db";
+        config1.waveColor = "#D073E7";
     }
     else if (id === 'stress') {
         config1.circleColor = "#f9243f";

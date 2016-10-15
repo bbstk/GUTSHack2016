@@ -47,10 +47,10 @@ var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
 			window.myLine.datasets[0].fillColor = "rgba(255, 181, 62, 0.2)";
 		}
 		else if (id==="relaxation"){
-			window.myLine.datasets[0].strokeColor = "#5bc0de";
-			window.myLine.datasets[0].pointHighlightStroke = "#5bc0de";
-			window.myLine.datasets[0].pointColor = "#5bc0de";
-			window.myLine.datasets[0].fillColor = "rgba(91, 192, 222, 0.2)";
+			window.myLine.datasets[0].strokeColor = "#b728db";
+			window.myLine.datasets[0].pointHighlightStroke = "#b728db";
+			window.myLine.datasets[0].pointColor = "#b728db";
+			window.myLine.datasets[0].fillColor = "rgba(183, 40, 219, 0.2)";
 		}
 		else {
 			console.log("cyka blyat");
