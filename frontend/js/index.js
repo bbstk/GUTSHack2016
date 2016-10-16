@@ -8,6 +8,9 @@ config1.waveTextColor = "#30a5ff";
 config1.waveColor = "#85CAFF";
 config1.waveCount = 2;
 config1.waveAnimateTime = 2000;
+
+$("[name='my-checkbox']").bootstrapSwitch();
+
 for (var i = 1; i <= 8; i++) {
     memberGauges[i-1] = loadLiquidFillGauge("membergauge" + i, 50, config1);
 } 
