@@ -1,5 +1,7 @@
+
+ var live;
 $(function() {
-    var live = $("[name='my-checkbox']");
+    live = $("[name='my-checkbox']");
     live.bootstrapSwitch();
 
 
@@ -14,8 +16,6 @@ config1.waveTextColor = "#30a5ff";
 config1.waveColor = "#85CAFF";
 config1.waveCount = 2;
 config1.waveAnimateTime = 2000;
-
-$("[name='my-checkbox']").bootstrapSwitch();
 
 for (var i = 1; i <= 8; i++) {
     memberGauges[i-1] = loadLiquidFillGauge("membergauge" + i, 50, config1);
@@ -99,10 +99,63 @@ var hardCodedValuesAfter12 = [42, 94, 66, 48, 75, 65, 33, 54, 36];
 var hardCodedTeamMembersBefore12 = [15, 21, 17, 19];
 var hardCodedTeamMembersAfter12 = [24, 55, 30, 43];
 
+$('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+	
+	if (state){
+		refreshIntervalTeamId = setInterval(function()
+		{ 
+				$.get(
+				"http://localhost:12345/teams/"+globalID,
+				{},
+				function(data) {
+					data = JSON.parse(data);
+					   for (var i = 1; i <= 8; i++) {
+
+							gauges[i-1].update(data[i-1]);
+						}
+				}
+			);
+		}, 3000);
+		
+		
+		refreshIntervalId = setInterval(function()
+		{ 
+			$.get(
+		   "http://localhost:12345/teams/" + 1 + "/" + globalID,
+			{},
+			function(data) {
+				data = JSON.parse(data);
+				   for (var i = 1; i <= 4; i++) {
+						changeColor('membergauge' + (4 - i + 1));
+						memberGauges[4 - i].update(data[i-1]);
+					}
+			}
+		    );
+		}, 3000);
+		
+		refreshIntervalId = setInterval(function()
+		{ 
+			$.get(
+		   "http://localhost:12345/teams/" + 2 + "/" + globalID,
+			{},
+			function(data) {
+				data = JSON.parse(data);
+				   for (var i = 1; i <= 4; i++) {
+						changeColor('membergauge' + (8 - i + 1));
+						memberGauges[8 - i].update(data[i-1]);
+					}
+			}
+		    );
+		}, 3000);
+	}
+});
+
 
 function timelineChange(time)
 {
 	document.getElementById("range").innerHTML=time;
+	
+	live.bootstrapSwitch('state', false, false);
 	
 	if(globalID === "stress"){
 		if(time < 12){

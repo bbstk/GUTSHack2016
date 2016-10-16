@@ -9,6 +9,8 @@ import (
 
 	"fmt"
 	"github.com/gorilla/mux"
+	"net/smtp"
+	//"strconv"
 )
 
 type Employee struct {
@@ -23,6 +25,37 @@ type Employee struct {
 
 var employees = make(map[int]Employee)
 var lock = sync.RWMutex{}
+
+func SendEmail(team string) {
+
+	auth := smtp.PlainAuth(
+		"",
+		"bossy.menager@gmail.com",
+		"iamyourboss",
+		"smtp.gmail.com",
+	)
+
+	msg := "From: bossy.menager@gmail.com\n" +
+		"To: fcbdelrio@gmail.com\n" +
+		"Subject: High level of stress in team: " + team +
+		"! Please take action.\n\n"+
+		"Visit http://localhost:8080/index.html for more information."
+	// Connect to the server, authenticate, set the sender and recipient,
+	// and send the email all in one step.
+	err := smtp.SendMail(
+		"smtp.gmail.com:587",
+		auth,
+		"bossy.menager@gmail.com",
+		[]string{"fcbdelrio@gmail.com"},
+		[]byte(msg),
+	)
+	if err != nil {
+		fmt.Println("ne stana meila :(")
+		log.Fatal(err)
+	} else {
+		fmt.Println("Stana mailcheto ;)")
+	}
+}
 
 func AddEmployeeEndpoint(w http.ResponseWriter, req *http.Request) {
 
@@ -46,7 +79,7 @@ func GetEmployeesEndpoint(w http.ResponseWriter, req *http.Request) {
 	json.NewEncoder(w).Encode(employeeList)
 }
 
-func CheckStressEndpoint(w http.ResponseWriter, req *http.Request){
+func CheckStressEndpoint(w http.ResponseWriter, req *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	var teamsMetric = make([]int, 8)
@@ -57,8 +90,14 @@ func CheckStressEndpoint(w http.ResponseWriter, req *http.Request){
 	lock.RUnlock()
 
 	for index, element := range teamsMetric {
-		if element/4 >=90 {
-			json.NewEncoder(w).Encode(index+1)
+		if element/4 >= 90 {
+
+			/////////////////////
+			// SEND EMAIL MATEY
+			//SendEmail(strconv.Itoa(index+1))
+			//
+			////////////////////
+			json.NewEncoder(w).Encode(index + 1)
 			return
 		}
 	}
@@ -233,6 +272,9 @@ func GetLevelForDepartamentEndpoint(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+
+	//SendEmail("DANI")
+
 	router := mux.NewRouter()
 
 	employees[1] = Employee{Id: 1, TeamId: 1, Engagement: 12, Focus: 23, Interest: 43, Relaxation: 23, Stress: 100}
