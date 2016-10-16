@@ -9,6 +9,7 @@
 	<link href="css/datepicker3.css" rel="stylesheet">
 	<link href="css/styles.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
+	<link href="css/bootstrap-switch.css" rel="stylesheet">
 
 
 	<!--Icons-->
@@ -62,6 +63,9 @@
 		<input type="range" min="9" max="17" value="0" step="1" onchange="timelineChange(this.value)" />
 		<span id="range" class="text-center">9</span>:00
 	</div>
+	<div style="text-align: center">
+		<input type="checkbox" name="my-checkbox" checked data-on-text="Live" data-off-text= "Offline">
+	</div>
 
 	</div><!--/.sidebar-->
 
@@ -97,6 +101,7 @@
 				<label class="btn btn-info">
 					<input type="radio" name="options" id="relaxation" autocomplete="off" onchange="getData(this)"> Relaxation
 				</label>
+
 
 			</div>
 		</div>
@@ -355,5 +360,6 @@
 <script src="js/liquidFillGauge.js"></script>
 <script src="js/index.js"></script>
 <script src="js/lumino.glyphs.js"></script>
+<script src="js/bootstrap-switch.js"></script>
 
 </html>

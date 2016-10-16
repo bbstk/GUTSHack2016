@@ -1,3 +1,9 @@
+$(function() {
+    var live = $("[name='my-checkbox']");
+    live.bootstrapSwitch();
+
+
+});
 var gauges = [];
 var memberGauges = [];   
 var globalID = 'focus';
